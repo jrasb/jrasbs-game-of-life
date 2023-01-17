@@ -1,0 +1,41 @@
+:root {
+	--width: 32px;
+	--dead-color: #586e75;
+	--live-color: #859900;
+	--bg-color: #fdf6e3;
+	--grid-color: #002b36;
+	--hover-color: #268bd2;
+}
+
+body {
+	background: var(--bg-color);
+}
+
+#container {
+	position: absolute;
+	top: 50%;
+	left: 50%;
+	transform: translate(-50%, -50%);
+	width: fit-content;
+	display: grid;
+	grid-template-columns: repeat(16, var(--width));
+	gap: 1px;
+	background: var(--grid-color);
+}
+
+#container > div {
+	width: var(--width);
+	height: var(--width);
+}
+
+#container > div:hover {
+	background: var(--hover-color);
+}
+
+.tile-class-0 {
+	background: var(--dead-color);
+}
+
+.tile-class-1 {
+	background: var(--live-color);
+}
