@@ -13,26 +13,26 @@ const grid = makeGrid();
 
 const renderGrid = () => {
 	let x = -0x1;
-  let y = 0x0;
+	let y = 0x0;
   
-  grid.forEach(
-  (row) => {
-  	for (let i = 0; i < row.length; i++) {
-    	const tileElement = document.createElement('div');
+	grid.forEach(
+	(row) => {
+		for (let i = 0; i < row.length; i++) {
+			const tileElement = document.createElement('div');
       
-      if (x == cols) {
-      	x = 0x0;
-        y += 0x1;
-      } else {
-      	x += 0x1;
-      }
+			if (x == cols) {
+				x = 0x0;
+				y += 0x1;
+			} else {
+				x += 0x1;
+			}
       
-      tileElement.id = 'x' + x.toString(16) + 'y' + y.toString(16);
-      tileElement.className = 'tile-class-' + row[i];
+			tileElement.id = 'x' + x.toString(16) + 'y' + y.toString(16);
+			tileElement.className = 'tile-class-' + row[i];
       
-      container.appendChild(tileElement);
-    }
-  })
+			container.appendChild(tileElement);
+		}
+	})
 }
 
 renderGrid();
