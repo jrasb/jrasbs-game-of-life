@@ -58,10 +58,9 @@ const updateGrid = () => {
  */
 
 const generateNextGen = (grid) => {
-    const nextGenGrid = grid.map(item => [...item])
-
+    const nextGenGrid = grid.map(item => [...item]);
 	for (let col = 0; col < grid.length; col++) {
-        for (let row = 0; row < grid[col]; row++) {
+        for (let row = 0; row < grid[col].length; row++) {
             const cell = grid[col][row];
             let neighbourSum = 0
             /**
@@ -78,7 +77,7 @@ const generateNextGen = (grid) => {
                     const yCell = row + j;
 
                     if (xCell >= 0 && yCell >= 0 && xCell < cols && yCell < rows) {
-                        const currentNeightbour = grid[col + i][col + j];
+                        const currentNeightbour = grid[col + i][row + j];
                         neighbourSum += currentNeightbour;
                     }
                 }
@@ -92,9 +91,10 @@ const generateNextGen = (grid) => {
             } else if (cell === 0 && neighbourSum === 3) {
                 nextGenGrid[col][row] = 1;
             }
+
         }
     }
-    
+    console.log(nextGenGrid);
     return nextGenGrid;
 }
 
