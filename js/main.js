@@ -1,7 +1,7 @@
 const wrapper = document.querySelector('#wrapper')
 const containerDiv = document.querySelector('#container');
-const cols = 16;
-const rows = 16;
+const cols = 32;
+const rows = 32;
 
 //generate and display grid
 const makeGrid = () => {
@@ -12,6 +12,8 @@ const makeGrid = () => {
 let grid = makeGrid();
 
 const renderGrid = () => {
+    containerDiv.innerHTML = null;
+
 	let x = -0x1;
 	let y = 0x0;
   
@@ -27,8 +29,8 @@ const renderGrid = () => {
 				x += 0x1;
 			}
       
-			tileElement.id = 'x' + x.toString(16) + 'y' + y.toString(16);
-			tileElement.className = 'tile-class-' + row[i];
+			tileElement.id = 'x' + x.toString(32) + 'y' + y.toString(32);
+			tileElement.className = 'tile-status-' + row[i];
       
 			containerDiv.appendChild(tileElement);
 		}
@@ -38,12 +40,12 @@ const renderGrid = () => {
 // make elements in the grid interactive
 
 
-const updateGrid = () => {
+const readTilesToGrid = () => {
     tileElements.forEach((element) => {
-        if (element.classList.contains('tile-class-1')) {
+        if (element.classList.contains('tile-status-1')) {
             console.log(element);
 
-            grid[parseInt(element.id[3], 16)][parseInt(element.id[1], 16)] = 1;
+            grid[parseInt(element.id[3], 32)][parseInt(element.id[1], 32)] = 1;
         }
     })
 }
@@ -59,7 +61,8 @@ const updateGrid = () => {
 
 const generateNextGen = (grid) => {
     const nextGenGrid = grid.map(item => [...item]);
-	for (let col = 0; col < grid.length; col++) {
+	
+    for (let col = 0; col < grid.length; col++) {
         for (let row = 0; row < grid[col].length; row++) {
             const cell = grid[col][row];
             let neighbourSum = 0
@@ -94,13 +97,30 @@ const generateNextGen = (grid) => {
 
         }
     }
-    console.log(nextGenGrid);
+    //console.log(nextGenGrid);
     return nextGenGrid;
 }
 
-const update = () => {
-grid = generateNextGen(grid);
-renderGrid(grid);
+const showNextGeneration = () => {
+    grid = generateNextGen(grid);
+    tileElements.forEach((element) => {
+        if (grid[parseInt(element.id[3], 32)][parseInt(element.id[1], 32)] === 1) {
+            element.classList.replace('tile-status-0', 'tile-status-1');
+        } else {
+            element.classList.replace('tile-status-1', 'tile-status-0');
+        }
+    })
+}
+
+let generation = 0;
+const bringTilesToLife = (generationAmount) => {    
+    setTimeout(() => {
+        showNextGeneration();
+        generation++;
+        if (generation < generationAmount) {
+            bringTilesToLife();
+        }
+    }, 100);
 }
 
 // on site load:
@@ -110,8 +130,7 @@ const tileElements = document.querySelectorAll('#container > div');
 
 tileElements.forEach((element) => {
 	element.addEventListener('click', () => {
-		element.classList.add('tile-class-1');
-		element.classList.remove('tile-class-0');
-        updateGrid(grid);
+        element.classList.replace('tile-status-0', 'tile-status-1');
+        readTilesToGrid(grid);
 	});
 });
