@@ -1,5 +1,6 @@
 const wrapper = document.querySelector('#wrapper')
 const containerDiv = document.querySelector('#container');
+const generationCounter = document.querySelector('#generation-counter');
 const cols = 32;
 const rows = 32;
 
@@ -101,7 +102,10 @@ const generateNextGen = (grid) => {
     return nextGenGrid;
 }
 
+let generation = 0;
 const showNextGeneration = () => {
+    generation++;
+    generationCounter.innerHTML = generation;
     grid = generateNextGen(grid);
     tileElements.forEach((element) => {
         if (grid[parseInt(element.id[3], 32)][parseInt(element.id[1], 32)] === 1) {
@@ -112,13 +116,11 @@ const showNextGeneration = () => {
     })
 }
 
-let generation = 0;
 const bringTilesToLife = (generationAmount) => {    
     setTimeout(() => {
         showNextGeneration();
-        generation++;
         if (generation < generationAmount) {
-            bringTilesToLife();
+            bringTilesToLife(generationAmount);
         }
     }, 100);
 }
@@ -134,3 +136,10 @@ tileElements.forEach((element) => {
         readTilesToGrid(grid);
 	});
 });
+
+document.querySelector('#generate-hundred').addEventListener('click', () => {
+    let plusHundred = (generation + 100);
+    bringTilesToLife(plusHundred);
+})
+
+document.querySelector('#generate-once').addEventListener('click', showNextGeneration);

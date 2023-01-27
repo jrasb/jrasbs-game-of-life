@@ -9,6 +9,20 @@
 
 body {
 	background: var(--bg-color);
+	font-family: monospace;
+	font-size: large;
+	font-weight: bold;
+	color: var(--grid-color);
+}
+
+button {
+	background: var(--dead-color);
+	border: var(--grid-color) 2px solid;
+	border-radius: 10px;
+}
+
+p {
+	display: inline;
 }
 
 #container {
