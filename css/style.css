@@ -1,0 +1,55 @@
+:root {
+	--width: 20px;
+	--dead-color: #586e75;
+	--live-color: #859900;
+	--bg-color: #fdf6e3;
+	--grid-color: #002b36;
+	--hover-color: #268bd2;
+}
+
+body {
+	background: var(--bg-color);
+	font-family: monospace;
+	font-size: large;
+	font-weight: bold;
+	color: var(--grid-color);
+}
+
+button {
+	background: var(--dead-color);
+	border: var(--grid-color) 2px solid;
+	border-radius: 10px;
+}
+
+p {
+	display: inline;
+}
+
+#container {
+	position: absolute;
+	top: 50%;
+	left: 50%;
+	transform: translate(-50%, -50%);
+	width: fit-content;
+	display: grid;
+	grid-template-columns: repeat(32, var(--width));
+	gap: 1px;
+	background: var(--grid-color);
+}
+
+#container > div {
+	width: var(--width);
+	height: var(--width);
+}
+
+#container > div:hover {
+	background: var(--hover-color);
+}
+
+.tile-status-0 {
+	background: var(--dead-color);
+}
+
+.tile-status-1 {
+	background: var(--live-color);
+}
